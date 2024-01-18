@@ -17,17 +17,21 @@ class ServerController extends AbstractController
         #[MapQueryString] ?ServerFiltersDTO $filters
     ): JsonResponse {
         $filteredServers = [];
+        $response = new JsonResponse();
+        $response->headers->set('Access-Control-Allow-Origin', '*', true);
+        $response->headers->set('Access-Control-Request-Headers', 'access-control-allow-origin');
+            
         $servers = json_decode(file_get_contents(
             $this->getParameter('kernel.project_dir') . '/' . ReadServerListCommand::STATIC_JSON_PATH
         ));
 
         if ($filters === null) {
-            return new JsonResponse(
-                [
-                    'servers' => $servers,
-                    'availableFilters' => $this->getServerFilters($servers)
-                ]
-            );
+            $response->setData([
+                'servers' => $servers,
+                'availableFilters' => $this->getServerFilters($servers)
+            ]);
+
+            return $response;
         }
 
         foreach ($servers as $server) {
@@ -35,10 +39,13 @@ class ServerController extends AbstractController
                 $filteredServers[] = $server;
             }
         }
-        return new JsonResponse([
+
+        $response->setData([
             'servers' => $filteredServers,
             'availableFilters' => $this->getServerFilters($servers)
         ]);
+
+        return $response;
     }
 
     private function matchServerFilter($server, ServerFiltersDTO $filters): bool
@@ -55,13 +62,13 @@ class ServerController extends AbstractController
             }
         }
 
-        if (!empty($filters->ram)) {
-            if (!in_array($server->ramSize, $filters->ram)) {
+        if (!empty($filters->ramSize)) {
+            if (!in_array($server->ramSize, $filters->ramSize)) {
                 return false;
             }
         }
 
-        if (!empty($filters->hddType)) {
+        if (!empty($filters->ramType)) {
             if (!in_array($server->ramType, $filters->ramType)) {
                 return false;
             }

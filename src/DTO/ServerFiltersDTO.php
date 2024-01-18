@@ -14,7 +14,7 @@ class ServerFiltersDTO
                 'max' => new Assert\Type('numeric')
             ]
         )] public ?array $storage = ['min' => 0, 'max' => 7200],
-        #[Assert\Type(type: 'array')] public ?array $ram = [],
+        #[Assert\Type(type: 'array')] public ?array $ramSize = [],
         #[Assert\Type(type: 'array')] public ?array $ramType = [],
         #[Assert\Choice(
             options: ServerHelper::HDD_TYPES,
