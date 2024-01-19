@@ -51,7 +51,8 @@ class ServerController extends AbstractController
     private function matchServerFilter($server, ServerFiltersDTO $filters): bool
     {
         if (!empty($filters->storage)) {
-            if ($server->hddStorage <= $filters->storage['min'] || $server->hddStorage >= $filters->storage['max']) {
+            $filters->storage = array_merge(ServerFiltersDTO::HDD_STORAGE_MIN_MAX_DEFAULTS, $filters->storage);
+            if ($server->hddStorage <= $filters->storage['min']  || $server->hddStorage >= $filters->storage['max']) {
                 return false;
             }
         }
@@ -80,7 +81,8 @@ class ServerController extends AbstractController
             }
         }
 
-        if (!empty($filters->storage)) {
+        if (!empty($filters->price)) {
+            $filters->price = array_merge(ServerFiltersDTO::HDD_STORAGE_MIN_MAX_DEFAULTS, $filters->storage);
             if ($server->price <= $filters->price['min'] || $server->price >= $filters->price['max']) {
                 return false;
             }

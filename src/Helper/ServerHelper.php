@@ -70,7 +70,8 @@ class ServerHelper
         return $hddData;
     }
 
-    public static function getHddRealStorage($distribution): int
+    /* TODO: Abstract standartization of 'real storage'. For now, on entry, everything is converted to GB */
+    public static function getHddRealStorage(string $distribution): int
     {
         $distribution = explode('x', $distribution);
         $hddQuantity = $distribution[0];
