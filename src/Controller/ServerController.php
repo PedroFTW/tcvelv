@@ -82,7 +82,7 @@ class ServerController extends AbstractController
         }
 
         if (!empty($filters->price)) {
-            $filters->price = array_merge(ServerFiltersDTO::HDD_STORAGE_MIN_MAX_DEFAULTS, $filters->storage);
+            $filters->price = array_merge(ServerFiltersDTO::PRICE_MIN_MAX_DEFAULTS, $filters->price);
             if ($server->price <= $filters->price['min'] || $server->price >= $filters->price['max']) {
                 return false;
             }

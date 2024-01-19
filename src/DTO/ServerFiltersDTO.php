@@ -12,7 +12,7 @@ class ServerFiltersDTO
         'max' => 7200
     ];
 
-    public const PRICE_STORAGE_MIN_MAX_DEFAULTS = [
+    public const PRICE_MIN_MAX_DEFAULTS = [
         'min' => 0,
         'max' => 9999.99
     ];
@@ -23,7 +23,7 @@ class ServerFiltersDTO
                 'min' => new Assert\Optional([new Assert\Type('numeric')]),
                 'max' => new Assert\Optional([new Assert\Type('numeric')])
             ]
-        )] public ?array $storage = self::PRICE_STORAGE_MIN_MAX_DEFAULTS,
+        )] public ?array $storage = self::PRICE_MIN_MAX_DEFAULTS,
         #[Assert\Type(type: 'array')] public ?array $ramSize = [],
         #[Assert\Type(type: 'array')] public ?array $ramType = [],
         #[Assert\Choice(
@@ -36,7 +36,7 @@ class ServerFiltersDTO
                 'min' => new Assert\Optional([new Assert\Type('numeric')]),
                 'max' => new Assert\Optional([new Assert\Type('numeric')])
             ]
-        )] public ?array $price = self::PRICE_STORAGE_MIN_MAX_DEFAULTS,
+        )] public ?array $price = self::PRICE_MIN_MAX_DEFAULTS,
     ) {
     }
 }
